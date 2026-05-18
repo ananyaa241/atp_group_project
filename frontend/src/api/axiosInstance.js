@@ -1,13 +1,15 @@
 import axios from 'axios'
 
+const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+if (!import.meta.env.VITE_API_URL) {
+  console.warn('VITE_API_URL is not set. Defaulting to', baseURL)
+}
+
 const axiosInstance=axios.create({
-
-    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
-
+    baseURL,
     headers:{
         'Content-Type':'application/json'
     }
-
 })
 
 axiosInstance.interceptors.request.use(

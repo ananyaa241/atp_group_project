@@ -41,39 +41,43 @@ const app = exp();
 
 // ================= ENABLE CORS =================
 
+const normalizeOrigin = (origin = '') => origin.trim().replace(/\/$/, '')
+const parseOrigins = (value) =>
+    !value ? [] : value.split(",").map(o => normalizeOrigin(o)).filter(Boolean)
+
 const allowedOrigins = [
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "http://localhost:5175",
-    ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(",").map(origin => origin.trim()) : []),
-    ...(process.env.CLIENT_URL ? [process.env.CLIENT_URL] : []),
-    ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : [])
-];
+    normalizeOrigin("http://localhost:5173"),
+    normalizeOrigin("http://localhost:5174"),
+    normalizeOrigin("http://localhost:5175"),
+    ...parseOrigins(process.env.ALLOWED_ORIGINS),
+    ...parseOrigins(process.env.CLIENT_URL),
+    ...parseOrigins(process.env.FRONTEND_URL)
+].filter(Boolean)
+
+const allowAllOrigins = process.env.ALLOW_ALL_ORIGINS === "true"
+
+console.log("Allowed CORS origins:", allowAllOrigins ? "*" : allowedOrigins)
 
 app.use(
-
     cors({
-
         origin: (origin, callback) => {
             if (!origin) {
-                return callback(null, true);
+                return callback(null, true)
             }
 
-            if (allowedOrigins.includes(origin)) {
-                return callback(null, true);
+            const normalizedOrigin = normalizeOrigin(origin)
+            if (allowAllOrigins || allowedOrigins.includes(normalizedOrigin)) {
+                return callback(null, true)
             }
 
             return callback(
                 new Error(`Origin ${origin} not allowed by CORS`),
                 false
-            );
+            )
         },
-
         credentials: true
-
     })
-
-);
+)
 
 
 // ================= COOKIE PARSER =================

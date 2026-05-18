@@ -1,0 +1,31 @@
+### Add Prescription
+POST http://localhost:5000/prescription-api/add
+Authorization: Bearer your_jwt_token
+Content-Type: application/json
+
+{
+    "patientId":"patient_id",
+    "doctorId":"doctor_id",
+    "appointmentId":"appointment_id",
+
+    "medicines":[
+        {
+            "medicineName":"Paracetamol",
+            "dosage":"500mg",
+            "duration":"5 days"
+        },
+        {
+            "medicineName":"Vitamin C",
+            "dosage":"1 tablet",
+            "duration":"7 days"
+        }
+    ],
+
+    "notes":"Take medicines after food"
+}
+
+
+
+### Get Patient Prescriptions
+GET http://localhost:5000/prescription-api/patient/patient_id
+Authorization: Bearer your_jwt_token

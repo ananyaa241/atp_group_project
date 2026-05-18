@@ -1,0 +1,73 @@
+### Register Doctor
+POST http://localhost:5000/doctor-api/register
+Content-Type: application/json
+
+{
+    "name":"Dr. Ramesh",
+    "email":"doctor@gmail.com",
+    "password":"doctor123",
+    "specialization":"Cardiologist",
+    "experience":8,
+    "qualification":"MBBS, MD",
+    "consultationFee":700,
+    "profileImage":"https://example.com/doctor.jpg",
+    "availability":[
+        {
+            "day":"Monday",
+            "startTime":"10:00 AM",
+            "endTime":"1:00 PM"
+        },
+        {
+            "day":"Wednesday",
+            "startTime":"2:00 PM",
+            "endTime":"6:00 PM"
+        }
+    ]
+}
+
+
+
+### Doctor Login
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "email":"doctor@gmail.com",
+    "password":"doctor123"
+}
+
+
+
+### Get All Doctors
+GET http://localhost:5000/doctor-api/doctors
+Authorization: Bearer your_jwt_token
+
+
+
+### Get Doctor By ID
+GET http://localhost:5000/doctor-api/doctor/doctor_id
+Authorization: Bearer your_jwt_token
+
+
+
+### Update Doctor
+PUT http://localhost:5000/doctor-api/update-doctor/doctor_id
+Authorization: Bearer your_jwt_token
+Content-Type: application/json
+
+{
+    "experience":10,
+    "consultationFee":1000
+}
+
+
+
+### Delete Doctor
+DELETE http://localhost:5000/doctor-api/delete-doctor/doctor_id
+Authorization: Bearer your_jwt_token
+
+
+
+### Search Doctors
+GET http://localhost:5000/doctor-api/search/cardiologist
+Authorization: Bearer your_jwt_token

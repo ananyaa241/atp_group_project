@@ -1,0 +1,64 @@
+### Book Appointment
+POST http://localhost:5000/appointment-api/book
+Authorization: Bearer your_jwt_token
+Content-Type: application/json
+
+{
+    "patientId":"patient_id",
+    "doctorId":"doctor_id",
+    "appointmentDate":"2026-05-10T10:30:00",
+    "symptoms":"Fever and headache"
+}
+
+
+
+### Get All Appointments
+GET http://localhost:5000/appointment-api/
+Authorization: Bearer your_jwt_token
+
+
+
+### Get Appointment By ID
+GET http://localhost:5000/appointment-api/appointment_id
+Authorization: Bearer your_jwt_token
+
+
+
+### Update Appointment Status
+PUT http://localhost:5000/appointment-api/update-status/appointment_id
+Authorization: Bearer your_jwt_token
+Content-Type: application/json
+
+{
+    "status":"Approved"
+}
+
+
+
+### Delete Appointment
+DELETE http://localhost:5000/appointment-api/delete/appointment_id
+Authorization: Bearer your_jwt_token
+
+
+
+### Search Appointments By Status
+GET http://localhost:5000/appointment-api/search/Pending
+Authorization: Bearer your_jwt_token
+
+
+
+### Get Doctor Appointments
+GET http://localhost:5000/appointment-api/doctor/doctor_id
+Authorization: Bearer your_jwt_token
+
+
+
+### Get Patient Appointments
+GET http://localhost:5000/appointment-api/patient/patient_id
+Authorization: Bearer your_jwt_token
+
+
+
+### Calendar Events
+GET http://localhost:5000/appointment-api/calendar/events
+Authorization: Bearer your_jwt_token

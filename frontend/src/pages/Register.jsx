@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { motion } from 'framer-motion'
 import { FaHospital, FaUser, FaEnvelope, FaLock, FaStethoscope, FaBriefcaseMedical } from 'react-icons/fa'
-import axios from '../api/axiosInstance'
+import axiosInstance from '../api/axiosInstance'
 import { toast } from 'react-hot-toast'
 
 const inputCls = 'w-full px-3.5 py-2.5 rounded-lg border text-sm outline-none transition'
@@ -29,7 +29,7 @@ function Register() {
     try {
       const api = role === 'admin' ? '/admin-api/register' : '/patient-api/register';
 
-      await axios.post(api, data)
+      await axiosInstance.post(api, data)
       toast.success('Account created! Please login.')
       navigate('/login')
     } catch (err) {

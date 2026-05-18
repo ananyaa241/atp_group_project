@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { FaHospital, FaLock, FaEnvelope, FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
-import axios from '../api/axiosInstance'
+import axiosInstance from '../api/axiosInstance'
 import { AuthContext } from '../context/AuthContext'
 
 function Login() {
@@ -20,7 +20,7 @@ function Login() {
 
   async function onSubmit(data) {
     try {
-      const res = await axios.post('/auth/login', data)
+      const res = await axiosInstance.post('/auth/login', data)
       login(res.data)
       toast.success('Welcome back!')
       navigate('/dashboard', { replace: true })

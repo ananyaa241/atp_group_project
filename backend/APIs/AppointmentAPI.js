@@ -1,19 +1,19 @@
 import exp from "express";
 
-import { AppointmentModel } 
-from "../models/AppointmentModel.js";
+import { AppointmentModel }
+    from "../models/AppointmentModel.js";
 
 import { DoctorModel }
-from "../models/DoctorModel.js";
+    from "../models/DoctorModel.js";
 
 import { PatientModel }
-from "../models/PatientModel.js";
+    from "../models/PatientModel.js";
 
 import { transporter }
-from "../config/nodemailer.js";
+    from "../config/nodemailer.js";
 
 import { VerifyToken }
-from "../middlewares/VerifyToken.js";
+    from "../middlewares/VerifyToken.js";
 
 export const appointmentApp = exp.Router();
 
@@ -74,19 +74,17 @@ appointmentApp.post(
 
                 });
 
-            //send email notification
-            try {
+            //send email notification - asynchronous to avoid blocking response
+            transporter.sendMail({
 
-                await transporter.sendMail({
+                from: process.env.EMAIL_USER,
 
-                    from: process.env.EMAIL_USER,
+                to: patient.email,
 
-                    to: patient.email,
-
-                    subject:
+                subject:
                     "Appointment Confirmation",
 
-                    html: `
+                html: `
 
                     <h2>
                     Appointment Booked Successfully
@@ -112,21 +110,19 @@ appointmentApp.post(
                     </p>
 
                     `
-                });
-
-            } catch (mailErr) {
+            }).catch(mailErr => {
 
                 console.log(
                     "Email sending failed",
                     mailErr.message
                 );
 
-            }
+            });
 
             res.status(201).json({
 
                 message:
-                "Appointment booked successfully",
+                    "Appointment booked successfully",
 
                 payload: newAppointment
 
@@ -155,26 +151,26 @@ appointmentApp.get(
             const appointments =
                 await AppointmentModel.find()
 
-                .populate(
-                    "patientId"
-                )
+                    .populate(
+                        "patientId"
+                    )
 
-                .populate(
-                    "doctorId"
-                )
+                    .populate(
+                        "doctorId"
+                    )
 
-                .populate(
-                    "prescriptionId"
-                )
+                    .populate(
+                        "prescriptionId"
+                    )
 
-                .sort({
-                    appointmentDate: 1
-                });
+                    .sort({
+                        appointmentDate: 1
+                    });
 
             res.status(200).json({
 
                 message:
-                "Appointments fetched",
+                    "Appointments fetched",
 
                 payload: appointments
 
@@ -205,24 +201,24 @@ appointmentApp.get(
                     req.params.id
                 )
 
-                .populate(
-                    "patientId"
-                )
+                    .populate(
+                        "patientId"
+                    )
 
-                .populate(
-                    "doctorId"
-                )
+                    .populate(
+                        "doctorId"
+                    )
 
-                .populate(
-                    "prescriptionId"
-                );
+                    .populate(
+                        "prescriptionId"
+                    );
 
             if (!appointment) {
 
                 return res.status(404).json({
 
                     message:
-                    "Appointment not found"
+                        "Appointment not found"
 
                 });
 
@@ -272,7 +268,7 @@ appointmentApp.put(
                 return res.status(404).json({
 
                     message:
-                    "Appointment not found"
+                        "Appointment not found"
 
                 });
 
@@ -281,7 +277,7 @@ appointmentApp.put(
             res.status(200).json({
 
                 message:
-                "Appointment updated successfully",
+                    "Appointment updated successfully",
 
                 payload: updatedAppointment
 
@@ -317,7 +313,7 @@ appointmentApp.delete(
                 return res.status(404).json({
 
                     message:
-                    "Appointment not found"
+                        "Appointment not found"
 
                 });
 
@@ -326,7 +322,7 @@ appointmentApp.delete(
             res.status(200).json({
 
                 message:
-                "Appointment deleted successfully"
+                    "Appointment deleted successfully"
 
             });
 
@@ -357,13 +353,13 @@ appointmentApp.get(
 
                 })
 
-                .populate(
-                    "patientId"
-                )
+                    .populate(
+                        "patientId"
+                    )
 
-                .populate(
-                    "doctorId"
-                );
+                    .populate(
+                        "doctorId"
+                    );
 
             res.status(200).json({
 
@@ -395,17 +391,17 @@ appointmentApp.get(
                 await AppointmentModel.find({
 
                     doctorId:
-                    req.params.doctorId
+                        req.params.doctorId
 
                 })
 
-                .populate(
-                    "patientId"
-                )
+                    .populate(
+                        "patientId"
+                    )
 
-                .sort({
-                    appointmentDate: 1
-                });
+                    .sort({
+                        appointmentDate: 1
+                    });
 
             res.status(200).json({
 
@@ -437,17 +433,17 @@ appointmentApp.get(
                 await AppointmentModel.find({
 
                     patientId:
-                    req.params.patientId
+                        req.params.patientId
 
                 })
 
-                .populate(
-                    "doctorId"
-                )
+                    .populate(
+                        "doctorId"
+                    )
 
-                .sort({
-                    appointmentDate: 1
-                });
+                    .sort({
+                        appointmentDate: 1
+                    });
 
             res.status(200).json({
 
@@ -478,22 +474,22 @@ appointmentApp.get(
             const appointments =
                 await AppointmentModel.find()
 
-                .populate("doctorId")
-                .populate("patientId");
+                    .populate("doctorId")
+                    .populate("patientId");
 
             const events =
                 appointments.map((appt) => ({
 
                     title:
-                    `${appt.patientId.name}
+                        `${appt.patientId.name}
                     with
                     Dr.${appt.doctorId.name}`,
 
                     start:
-                    appt.appointmentDate,
+                        appt.appointmentDate,
 
                     status:
-                    appt.status
+                        appt.status
 
                 }));
 
@@ -548,74 +544,80 @@ appointmentApp.post(
                     .filter(Boolean)
             )];
 
-            if (!process.env.OPENAI_API_KEY) {
-                return res.status(500).json({
-                    message: "OpenAI API key is not configured."
-                });
+            let parsed = null;
+
+            if (process.env.OPENAI_API_KEY) {
+                const openAiResponse = await fetch(
+                    "https://api.openai.com/v1/chat/completions",
+                    {
+                        method: "POST",
+                        headers: {
+                            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            model: "gpt-3.5-turbo",
+                            messages: [
+                                {
+                                    role: "system",
+                                    content: "You are a helpful, concise medical assistant."
+                                },
+                                {
+                                    role: "user",
+                                    content: prompt
+                                }
+                            ],
+                            temperature: 0.25,
+                            max_tokens: 320
+                        })
+                    }
+                );
+
+                const openAiData = await openAiResponse.json();
+
+                if (openAiResponse.ok) {
+                    const rawContent = openAiData?.choices?.[0]?.message?.content || "";
+                    parsed = extractJson(rawContent);
+                } else {
+                    console.error("OpenAI API error:", openAiData?.error?.message || "Unknown error");
+                }
             }
 
-            const prompt = `You are a medical assistant. A patient reports the following symptoms: "${symptoms}".
-
-Available specializations: ${availableSpecializations.join(", ")}.
-
-Return only valid JSON with the keys:
-- specialization: the best matching specialization from the list above or General Medicine.
-- explanation: a short plain-language explanation of why this specialty is the best fit.
-- precautions: an array of 3 to 4 first precautions the patient should take immediately.
-
-Do not return any other text.`;
-
-            const openAiResponse = await fetch(
-                "https://api.openai.com/v1/chat/completions",
-                {
-                    method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        model: "gpt-3.5-turbo",
-                        messages: [
-                            {
-                                role: "system",
-                                content: "You are a helpful, concise medical assistant."
-                            },
-                            {
-                                role: "user",
-                                content: prompt
-                            }
-                        ],
-                        temperature: 0.25,
-                        max_tokens: 320
-                    })
+            // Fallback if OpenAI fails or key is missing
+            if (!parsed) {
+                const s = symptoms.toLowerCase();
+                if (s.includes('heart') || s.includes('chest') || s.includes('palpitations')) {
+                    parsed = {
+                        specialization: "Cardiology",
+                        explanation: "Based on heart-related symptoms, a cardiologist is recommended.",
+                        precautions: ["Avoid heavy exertion", "Maintain calm breathing", "Seek ER if pain intensifies"]
+                    };
+                } else if (s.includes('brain') || s.includes('headache') || s.includes('dizziness')) {
+                    parsed = {
+                        specialization: "Neurology",
+                        explanation: "Headaches or dizziness may require a neurological evaluation.",
+                        precautions: ["Rest in a dark room", "Stay hydrated", "Avoid bright screens"]
+                    };
+                } else if (s.includes('bone') || s.includes('joint') || s.includes('fracture') || s.includes('knee')) {
+                    parsed = {
+                        specialization: "Orthopedics",
+                        explanation: "Joint or bone pain is typically managed by an orthopedic specialist.",
+                        precautions: ["Rest the affected area", "Use ice packs", "Avoid weight-bearing"]
+                    };
+                } else if (s.includes('skin') || s.includes('rash') || s.includes('itch')) {
+                    parsed = {
+                        specialization: "Dermatology",
+                        explanation: "Skin conditions or rashes should be seen by a dermatologist.",
+                        precautions: ["Avoid scratching", "Use mild soap", "Apply cool compress"]
+                    };
+                } else {
+                    parsed = {
+                        specialization: "General Medicine",
+                        explanation: "For general symptoms, starting with a General Physician is best.",
+                        precautions: ["Rest and fluids", "Monitor temperature", "Consult a doctor for diagnosis"]
+                    };
                 }
-            );
-
-            const openAiData = await openAiResponse.json();
-
-            if (!openAiResponse.ok) {
-                const errorMessage = openAiData?.error?.message || "OpenAI request failed.";
-                return res.status(502).json({ message: errorMessage });
             }
-
-            const rawContent = openAiData?.choices?.[0]?.message?.content || "";
-
-            const extractJson = (text) => {
-                const start = text.indexOf("{");
-                const end = text.lastIndexOf("}");
-                if (start === -1 || end === -1) return null;
-                try {
-                    return JSON.parse(text.slice(start, end + 1));
-                } catch (parseErr) {
-                    return null;
-                }
-            };
-
-            const parsed = extractJson(rawContent) || {
-                specialization: "General Medicine",
-                explanation: "Use General Medicine until a more specific specialty can be identified.",
-                precautions: ["Rest", "Stay hydrated", "Monitor your symptoms"]
-            };
 
             const matchedSpecialization = parsed.specialization || "General Medicine";
 

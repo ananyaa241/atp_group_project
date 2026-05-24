@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import {
   FaUserMd, FaCalendarCheck, FaPrescriptionBottleAlt,
   FaUsers, FaTachometerAlt, FaUserCircle, FaSignOutAlt,
-  FaPhone, FaHospital, FaBrain
+  FaPhone, FaHospital
 } from 'react-icons/fa'
 import { AuthContext } from '../../context/AuthContext'
 import { toast } from 'react-hot-toast'
@@ -13,10 +13,9 @@ function NavItem({ to, icon: Icon, label }) {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all ${
-          isActive
-            ? 'bg-teal-700 text-white shadow-sm'
-            : 'text-slate-300 hover:bg-white/10 hover:text-white'
+        `flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all ${isActive
+          ? 'bg-teal-700 text-white shadow-sm'
+          : 'text-slate-300 hover:bg-white/10 hover:text-white'
         }`
       }
     >
@@ -77,21 +76,18 @@ function Sidebar() {
       {/* ── Navigation ────────────────────────────────────────────────────── */}
       <nav className='flex-1 px-3 py-4 space-y-0.5'>
         <p className='text-[9px] uppercase tracking-[0.2em] text-slate-600 font-semibold px-2 mb-2'>Main Menu</p>
-        <NavItem to='/dashboard'     icon={FaTachometerAlt}           label='Dashboard' />
+        <NavItem to='/dashboard' icon={FaTachometerAlt} label='Dashboard' />
         {role !== 'doctor' && (
-          <NavItem to='/doctors'       icon={FaUserMd}                  label='Our Doctors' />
+          <NavItem to='/doctors' icon={FaUserMd} label='Our Doctors' />
         )}
         {(role === 'admin' || role === 'doctor') && (
-          <NavItem to='/patients'    icon={FaUsers}                   label='Patients' />
+          <NavItem to='/patients' icon={FaUsers} label='Patients' />
         )}
-        <NavItem to='/appointments'  icon={FaCalendarCheck}           label='Appointments' />
+        <NavItem to='/appointments' icon={FaCalendarCheck} label='Appointments' />
         {(role === 'admin' || role === 'doctor' || role === 'patient') && (
           <NavItem to='/prescriptions' icon={FaPrescriptionBottleAlt} label='Prescriptions' />
         )}
-        {role === 'patient' && (
-          <NavItem to='/symptom-checker' icon={FaBrain}               label='Symptom Checker' />
-        )}
-        <NavItem to='/profile'       icon={FaUserCircle}              label='My Profile' />
+        <NavItem to='/profile' icon={FaUserCircle} label='My Profile' />
       </nav>
 
       {/* ── Emergency ─────────────────────────────────────────────────────── */}

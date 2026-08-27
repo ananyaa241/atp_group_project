@@ -1,4 +1,4 @@
-# ?? MediCare+ — Hospital Management System
+#                       MediCare+ â€” Hospital Management System
 
 <div align="center">
 
@@ -104,29 +104,29 @@ The app is designed with security, scalability, and modern UX best practices in 
 ```
 group project/
 +-- backend/
-¦   +-- APIs/
-¦   +-- config/
-¦   +-- middlewares/
-¦   +-- models/
-¦   +-- server.js
-¦   +-- package.json
-¦   +-- .env
-¦   +-- *.http
+Â¦   +-- APIs/
+Â¦   +-- config/
+Â¦   +-- middlewares/
+Â¦   +-- models/
+Â¦   +-- server.js
+Â¦   +-- package.json
+Â¦   +-- .env
+Â¦   +-- *.http
 +-- frontend/
-¦   +-- public/
-¦   +-- src/
-¦   ¦   +-- api/
-¦   ¦   ¦   +-- axiosInstance.js
-¦   ¦   +-- components/
-¦   ¦   +-- context/
-¦   ¦   +-- layouts/
-¦   ¦   +-- pages/
-¦   ¦   +-- routes/
-¦   ¦   +-- App.jsx
-¦   ¦   +-- main.jsx
-¦   ¦   +-- index.css
-¦   +-- package.json
-¦   +-- .env.example
+Â¦   +-- public/
+Â¦   +-- src/
+Â¦   Â¦   +-- api/
+Â¦   Â¦   Â¦   +-- axiosInstance.js
+Â¦   Â¦   +-- components/
+Â¦   Â¦   +-- context/
+Â¦   Â¦   +-- layouts/
+Â¦   Â¦   +-- pages/
+Â¦   Â¦   +-- routes/
+Â¦   Â¦   +-- App.jsx
+Â¦   Â¦   +-- main.jsx
+Â¦   Â¦   +-- index.css
+Â¦   +-- package.json
+Â¦   +-- .env.example
 +-- .gitignore
 +-- README.md
 ```

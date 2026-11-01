@@ -58,22 +58,24 @@ const allowAllOrigins = process.env.ALLOW_ALL_ORIGINS === "true"
 
 console.log("Allowed CORS origins:", allowAllOrigins ? "*" : allowedOrigins)
 
+const isAllowedOrigin = (origin) => {
+    if (!origin) return true;
+    if (allowAllOrigins) return true;
+    const normalized = normalizeOrigin(origin);
+    if (allowedOrigins.includes(normalized)) return true;
+    // Allow any .vercel.app deployment automatically
+    if (/^https:\/\/[a-zA-Z0-9_-]+\.vercel\.app$/.test(normalized)) return true;
+    return false;
+};
+
 app.use(
     cors({
         origin: (origin, callback) => {
-            if (!origin) {
-                return callback(null, true)
+            if (isAllowedOrigin(origin)) {
+                return callback(null, true);
             }
-
-            const normalizedOrigin = normalizeOrigin(origin)
-            if (allowAllOrigins || allowedOrigins.includes(normalizedOrigin)) {
-                return callback(null, true)
-            }
-
-            return callback(
-                new Error(`Origin ${origin} not allowed by CORS`),
-                false
-            )
+            console.warn(`Origin ${origin} not allowed by CORS`);
+            return callback(null, false);
         },
         credentials: true
     })
@@ -140,6 +142,9 @@ const connectDB = async () => {
             "MongoDB connected successfully"
         );
 
+        // Start reminder scheduler once DB is established
+        startReminderScheduler();
+
         //server port
         const port =
             process.env.PORT || 5000;
@@ -167,9 +172,6 @@ const connectDB = async () => {
 };
 
 connectDB();
-
-// ─── Start appointment reminder email scheduler ───────────────────────────────
-startReminderScheduler();
 
 
 // Health check for platform probes (Render, Vercel previews, etc.)

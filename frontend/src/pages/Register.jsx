@@ -51,9 +51,11 @@ function Register() {
           {/* Card header */}
           <div className='bg-teal-800 px-8 py-6 text-white'>
             <div className='flex items-center gap-3 mb-3'>
-              <div className='h-9 w-9 rounded-lg bg-white/15 flex items-center justify-center'>
-                <FaHospital size={16} />
-              </div>
+              <img
+                src='/favicon.png'
+                alt='MediCare+ Logo'
+                className='h-9 w-9 rounded-lg object-contain bg-white/95 p-0.5 flex-shrink-0 shadow-sm'
+              />
               <p className='text-sm font-extrabold'>MediCare<span className='text-red-300'>+</span></p>
             </div>
             <h1 className='text-xl font-bold'>Create Your Account</h1>

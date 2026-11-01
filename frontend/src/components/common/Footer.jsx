@@ -33,9 +33,11 @@ function Footer() {
         {/* Brand col */}
         <div className='md:col-span-2'>
           <div className='flex items-center gap-2.5 mb-4'>
-            <div className='h-9 w-9 rounded-lg bg-teal-700 flex items-center justify-center flex-shrink-0'>
-              <FaHospital size={15} className='text-white' />
-            </div>
+            <img
+              src='/favicon.png'
+              alt='MediCare+ Logo'
+              className='h-9 w-9 rounded-lg object-contain bg-white/95 p-0.5 flex-shrink-0 shadow-sm'
+            />
             <div>
               <p className='text-sm font-extrabold leading-tight'>
                 <span className='text-teal-400'>Medi</span><span className='text-white'>Care</span><span className='text-red-400'>+</span>

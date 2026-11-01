@@ -72,9 +72,11 @@ function Header() {
 
         {/* Brand */}
         <Link to='/' className='flex items-center gap-3'>
-          <div className='h-9 w-9 rounded-lg bg-teal-700 flex items-center justify-center shadow-sm flex-shrink-0'>
-            <span className='text-white font-black text-base'>M</span>
-          </div>
+          <img
+            src='/favicon.png'
+            alt='MediCare+ Hospital Logo'
+            className='h-10 w-10 rounded-xl object-contain shadow-sm flex-shrink-0 bg-white p-0.5 border border-teal-600/30'
+          />
           <div>
             <p className='text-sm font-extrabold text-teal-700 dark:text-teal-400 leading-tight tracking-tight'>
               MediCare<span className='text-red-500'>+</span>

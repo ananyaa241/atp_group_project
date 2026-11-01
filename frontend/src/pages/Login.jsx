@@ -35,9 +35,11 @@ function Login() {
       <div className='hidden lg:flex flex-col justify-between w-2/5 bg-teal-800 px-12 py-14 text-white'>
         <div>
           <div className='flex items-center gap-3 mb-14'>
-            <div className='h-10 w-10 rounded-xl bg-white/20 flex items-center justify-center'>
-              <FaHospital size={18} className='text-white' />
-            </div>
+            <img
+              src='/favicon.png'
+              alt='MediCare+ Logo'
+              className='h-10 w-10 rounded-xl object-contain bg-white/95 p-1 flex-shrink-0 shadow-sm'
+            />
             <div>
               <p className='text-base font-extrabold leading-tight'>MediCare<span className='text-red-300'>+</span></p>
               <p className='text-[10px] text-teal-300 uppercase tracking-[0.2em]'>Hospital System</p>

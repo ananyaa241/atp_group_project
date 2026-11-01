@@ -1,17 +1,15 @@
 import axios from 'axios'
 
-const baseURL = import.meta.env.VITE_API_URL?.trim()
+const rawBaseURL = import.meta.env.VITE_API_URL?.trim()
 
-if (!baseURL) {
-  if (import.meta.env.DEV) {
-    console.warn('VITE_API_URL is not set. Defaulting to http://localhost:5000 for local development.')
-  } else {
-    throw new Error('VITE_API_URL is required in production. Set this environment variable to your backend URL.')
-  }
+if (!rawBaseURL) {
+  console.warn('VITE_API_URL is not set or empty. Defaulting to relative API or localhost fallback.')
 }
 
+const baseURL = rawBaseURL || (import.meta.env.DEV ? 'http://localhost:5000' : '')
+
 const axiosInstance = axios.create({
-    baseURL: baseURL || 'http://localhost:5000',
+    baseURL,
     headers: {
         'Content-Type': 'application/json'
     }

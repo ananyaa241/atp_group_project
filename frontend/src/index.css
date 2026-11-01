@@ -63,7 +63,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
-  font-size: 13.5px;
+  font-size: clamp(12px, 1.2vw + 8px, 14px);
   scroll-behavior: smooth;
 }
 
@@ -77,6 +77,12 @@ body {
   transition: background 0.25s, color 0.25s;
   overflow-x: hidden;
   line-height: 1.5;
+  width: 100%;
+}
+
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
 }
 
 button, input, select, textarea { font: inherit; }
